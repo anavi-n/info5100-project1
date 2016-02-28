@@ -8,16 +8,16 @@ var svg = d3.select("#map").append("svg")
     .attr("width", width)
     .attr("height", height);
 var g = svg.append("g");
-//var worldObjects;
+var worldObjects;
 
 var digitScale = d3.scale.category20b();
 
 var allDataMap;
-//var pationRate;
+var pationRate;
 
 //read json file
 d3.json("json/world-50m.json", function(error, world) {
-  //worldObjects = world;
+  worldObjects = world;
   
   if(error) {
     console.log(error);
@@ -28,7 +28,7 @@ d3.json("json/world-50m.json", function(error, world) {
   //countries.forEach(function(country){
     g.selectAll("path").data(countries).enter()
     .append("path").attr("d",path)
-    .style("fill", function (c){ return digitScale(Math.floor(c.id/5)); })//"#192128")
+    .style("fill", function (c){ return digitScale(Math.floor(c.id)); })//"#192128")
     .style("stroke","#2A2F3B");
   //}); 
 
@@ -37,19 +37,18 @@ d3.json("json/world-50m.json", function(error, world) {
     console.log(country.id);
   });
 
-  d3.csv("WomenInWorkforce.csv",function(error,data){ //WomenInWorkforce.csv
+  d3.csv("WomenInWorkforce.csv",function(error,rows){
     if (error) {console.log(error);}
     //console.log(rows);
 
-    allDataMap = d3.map(data, function (county) { return Number(county.ISOID); });
-    console.log(allDataMap); //undefined
+    allDataMap = d3.map(rows,function(c) {return Number(c.ISOID);  });
+    //console.log(allDataMap);
     g.selectAll("path")
     .style("fill",function(c){
-      var countryData = allDataMap.get(c.id);//only get one id
-      console.log(countryData);
-      console.log(c.id);
-      var pationRate = countryData.LaborForce;
-      if (!countryData) { return "#2A2F3B";}
+      var eachCountryData = allDataMap.get(c.id);
+      console.log(eachCountryData);
+      pationRate = eachCountryData.LaborForce;
+      if (!eachCountryData) { return "#2A2F3B";}
       else if (pationRate <= 30) { return "#000000";}
       else if (pationRate > 30 && pationRate <=50) { return "#333333";}
       else if (pationRate > 50 && pationRate <=70) { return "#777777";}
