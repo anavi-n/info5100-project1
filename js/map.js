@@ -28,37 +28,38 @@ d3.json("json/world-50m.json", function(error, world) {
   //countries.forEach(function(country){
     g.selectAll("path").data(countries).enter()
     .append("path").attr("d",path)
-    .style("fill", function (c){ return digitScale(Math.floor(c.id/5)); })//"#192128")
+    //.style("fill", function (c){ return digitScale(Math.floor(c.id/5)); })//"#192128")
     .style("stroke","#2A2F3B");
   //}); 
 
-  g.selectAll("path").data(countries)
+  /**g.selectAll("path").data(countries)
   .on("mouseover", function (country){
     console.log(country.id);
-  });
+  });**/
 
   d3.csv("WomenInWorkforce.csv",function(error,data){ //WomenInWorkforce.csv
     if (error) {console.log(error);}
     //console.log(rows);
 
-    allDataMap = d3.map(data, function (county) { return Number(county.ISOID); });
-    console.log(allDataMap); //undefined
+    allDataMap = d3.map(data, function (county) { return Number(county.ISOID); //console.log(county.ISOID)
+    });
+    console.log(allDataMap); 
     g.selectAll("path")
-    .style("fill",function(c){
-      var countryData = allDataMap.get(c.id);//only get one id
-      console.log(countryData);
-      console.log(c.id);
-      var pationRate = countryData.LaborForce;
+    .style("fill",function(d){
+      var countryData = allDataMap.get(d.id);//only get one id
+      console.log(countryData); //undefined
+      console.log(d.id);
+      //var pationRate = countryData.LaborForce;
       if (!countryData) { return "#2A2F3B";}
-      else if (pationRate <= 30) { return "#000000";}
-      else if (pationRate > 30 && pationRate <=50) { return "#333333";}
-      else if (pationRate > 50 && pationRate <=70) { return "#777777";}
-      else if (pationRate > 70 && pationRate <=100) { return "#7bfbfbf";}
+      else if (countryData.LaborForce <= 30) { return "#000000";}
+      else if (countryData.LaborForce > 30 && countryData.LaborForce <=50) { return "#333333";}
+      else if (countryData.LaborForce > 50 && countryData.LaborForce <=70) { return "#777777";}
+      else if (countryData.LaborForce > 70 && countryData.LaborForce <=100) { return "#bfbfbf";}
 
       return "#192128";
     })
   });
-
+ 
 });
 
 
