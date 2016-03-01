@@ -29,7 +29,8 @@ d3.json("json/world-50m.json", function(error, world) {
     g.selectAll("path").data(countries).enter()
     .append("path").attr("d",path)
     //.style("fill", function (c){ return digitScale(Math.floor(c.id/5)); })//"#192128")
-    .style("stroke","#2A2F3B");
+    //.style("stroke","#000000");
+    .style("stroke","#ffffff");
   //}); 
 
   /**g.selectAll("path").data(countries)
@@ -45,19 +46,54 @@ d3.json("json/world-50m.json", function(error, world) {
     });
     console.log(allDataMap); 
     g.selectAll("path")
+    //.style("opacity","0.8")
     .style("fill",function(d){
       var countryData = allDataMap.get(d.id);//only get one id
       console.log(countryData); //undefined
       console.log(d.id);
       //var pationRate = countryData.LaborForce;
-      if (!countryData) { return "#2A2F3B";}
-      else if (countryData.LaborForce <= 30) { return "#000000";}
-      else if (countryData.LaborForce > 30 && countryData.LaborForce <=50) { return "#333333";}
-      else if (countryData.LaborForce > 50 && countryData.LaborForce <=70) { return "#777777";}
-      else if (countryData.LaborForce > 70 && countryData.LaborForce <=100) { return "#bfbfbf";}
+      if (!countryData) { return "#feebe2";}
+      /**else if (countryData.LaborForce <= 5) { return "rgb(63,0,11)";}
+      else if (countryData.LaborForce > 5 && countryData.LaborForce <=15) { return "rgb(240,57,89)";}
+      else if (countryData.LaborForce > 15 && countryData.LaborForce <=25) { return "rgb(245,102,126)";}
+      else if (countryData.LaborForce > 25 && countryData.LaborForce <=35) { return "rgb(254,130,152)";}
+      else if (countryData.LaborForce > 35 && countryData.LaborForce <=45) { return "rgb(255,143,16)";}
+      else if (countryData.LaborForce > 45 && countryData.LaborForce <=55) { return "rgb(251,174,188)";}
+      else if (countryData.LaborForce > 55 && countryData.LaborForce <=65) { return "rgb(254,222,227)";}
+      else if (countryData.LaborForce > 65 && countryData.LaborForce <=75) { return "rgb(255,239,242)";}
+      else if (countryData.LaborForce > 75 && countryData.LaborForce <=85) { return "rgb(255,245,250)";}
+      else if (countryData.LaborForce > 85 && countryData.LaborForce <=95) { return "rgb(255,255,255)";}
+      else if (countryData.LaborForce > 95 && countryData.LaborForce <=100) { return "rgb(245,255，245)";}
+      return "#192128";**/
 
-      return "#192128";
+      else if (countryData.LaborForce <= 5) { return "#feebe2";}
+      else if (countryData.LaborForce > 5 && countryData.LaborForce <=15) { return "#feebe2";}
+      else if (countryData.LaborForce > 15 && countryData.LaborForce <=25) { return "#fbb4b9";}
+      else if (countryData.LaborForce > 25 && countryData.LaborForce <=35) { return "#fbb4b9";}
+      else if (countryData.LaborForce > 35 && countryData.LaborForce <=45) { return "#f768a1";}
+      else if (countryData.LaborForce > 45 && countryData.LaborForce <=55) { return "#f768a1";}
+      else if (countryData.LaborForce > 55 && countryData.LaborForce <=65) { return "#c51b8a";}
+      else if (countryData.LaborForce > 65 && countryData.LaborForce <=75) { return "#c51b8a";}
+      else if (countryData.LaborForce > 75 && countryData.LaborForce <=85) { return "#7a0177";}
+      else if (countryData.LaborForce > 85 && countryData.LaborForce <=95) { return "#7a0177";}
+      else if (countryData.LaborForce > 95 && countryData.LaborForce <=100) { return "#7a0177";}
+      return "#7a0177";
     })
+
+    /**.style("stroke-width",function(d){
+      var countryData = allDataMap.get(d.id);
+      if (!countryData) {return 1;}
+      else if (countryData.LaborForce <= 15) { return 3;}
+      else if (countryData.LaborForce > 75 && countryData.LaborForce <=100) {return 3;}
+      return 1;
+    })
+    .style("stroke-opacity", function(d){
+      var countryData = allDataMap.get(d.id);
+      if (!countryData) {return 0.5;}
+      else if (countryData.LaborForce <= 15) { return 0.8;}
+      else if (countryData.LaborForce > 75 && countryData.LaborForce <=100) {return 0.8;}
+      return 0.5;
+    })**/
   });
  
 });
