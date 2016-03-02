@@ -2,12 +2,6 @@ var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 1056 - margin.left - margin.right,
     height = 550 - margin.top - margin.bottom;
 
-/*
- * value accessor - returns the value to encode for a given data object.
- * scale - maps value to a visual display encoding, such as a pixel position.
- * map function - maps from data value to display value
- * axis - sets up axis
- */
 
 // setup x
 var xValue = function(d) { return d.literacyRate;}, // data -> value
@@ -22,11 +16,16 @@ var yValue = function(d) { return d.LFPrate;}, // data -> value
     yAxis = d3.svg.axis().scale(yScale).orient("left").ticks(5);
 
 // setup fill color
+<<<<<<< Updated upstream
 var legendColor = ["#000080","#31a354","  #FFFF00"];
 var developState = ["Highly Developed","Medium Development","Low Development"];
 var color = d3.scale.ordinal().domain(developState).range(legendColor);
 
 var cValue = function(d) { return d.developState;};
+=======
+var cValue = function(d) { return d.developState;},
+    color = d3.scale.category20();
+>>>>>>> Stashed changes
 
 // add the graph canvas to the body of the webpage
 var svg = d3.select("#map2").append("svg")
@@ -41,6 +40,7 @@ var tooltip = d3.select("body").append("div")
     .style("opacity", 0);
 
 //add bands
+<<<<<<< Updated upstream
 var bandColor = ["#feebe2","#fbb4b9","#f768a1","#c51b8a","#7a0177"];
 for (var i = 0; i < bandColor.length; i++){
   svg.append("g")
@@ -53,11 +53,47 @@ for (var i = 0; i < bandColor.length; i++){
   .style("fill",bandColor[4-i]);
 }
 
+=======
+svg.append("rect")
+  .attr("x", 0)
+  .attr("y", yScale(0.1) )
+  .attr("width",width)
+  .attr("height", 0.1 * height)
+  .style("fill", "#feebe2")
+  .style("opacity","0.4")
+  .style("stroke","#fff")
+  .style("stroke-width","1");
+>>>>>>> Stashed changes
+
+  svg.append("rect")
+    .attr("x", 0)
+    .attr("y", yScale(0.2) )
+    .attr("width",width)
+    .attr("height", 0.1 * height)
+    .style("fill", "#fbb4b9")
+    .style("opacity","0.4")
+    .style("stroke","#fff")
+    .style("stroke-width","1");
 
 
 // load data
 d3.csv("mergedData.csv", function(error, data) {
+<<<<<<< Updated upstream
  
+=======
+
+  // change string (from CSV) into number format
+  data.forEach(function(d) {
+    d.literacyRate = +d.literacyRate;
+    d["LFPrate"] = +d["LFPrate"];
+
+  });
+
+  // don't want dots overlapping axis, so add in buffer to data domain
+  xScale.domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]);
+  yScale.domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]);
+
+>>>>>>> Stashed changes
   // x-axis
   svg.append("g")
       .attr("class", "x axis")
@@ -69,7 +105,7 @@ d3.csv("mergedData.csv", function(error, data) {
       .attr("x", width)
       .attr("y", -6)
       .style("text-anchor", "end")
-      .text("literacyRate");
+      .text("Adult female literacy %");
 
   // y-axis
   svg.append("g")
@@ -82,7 +118,7 @@ d3.csv("mergedData.csv", function(error, data) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("LFPrate");
+      .text("Adult female labor %");
 
   // draw dots
   svg.selectAll(".dot")
@@ -92,6 +128,7 @@ d3.csv("mergedData.csv", function(error, data) {
       .attr("r", 3.5)
       .attr("cx", xMap)
       .attr("cy", yMap)
+<<<<<<< Updated upstream
       .style("fill", function(d) { return color(cValue(d));})
       // I don't see any difference with or without these code
       /*.on("mouseover", function(d) {
@@ -108,6 +145,10 @@ d3.csv("mergedData.csv", function(error, data) {
                .duration(500)
                .style("opacity", 0.5);
       });*/
+=======
+      .style("fill", function(d) { return color(cValue(d));});
+
+>>>>>>> Stashed changes
 
   // draw legend
   var legend = svg.selectAll(".legend")
