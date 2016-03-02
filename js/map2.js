@@ -11,19 +11,22 @@ var margin = {top: 20, right: 20, bottom: 30, left: 40},
 
 // setup x
 var xValue = function(d) { return d.literacyRate;}, // data -> value
-    xScale = d3.scale.linear().range([0, width]), // value -> display
+    xScale = d3.scale.linear().domain([0,100]).range([0, width]), // value -> display
     xMap = function(d) { return xScale(xValue(d));}, // data -> display
-    xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+    xAxis = d3.svg.axis().scale(xScale).orient("bottom").ticks(11);
 
 // setup y
-var yValue = function(d) { return d["LFPrate"];}, // data -> value
-    yScale = d3.scale.linear().range([height, 0]), // value -> display
+var yValue = function(d) { return d.LFPrate;}, // data -> value
+    yScale = d3.scale.linear().domain([0,100]).range([height, 0]), // value -> display
     yMap = function(d) { return yScale(yValue(d));}, // data -> display
-    yAxis = d3.svg.axis().scale(yScale).orient("left");
+    yAxis = d3.svg.axis().scale(yScale).orient("left").ticks(5);
 
 // setup fill color
-var cValue = function(d) { return d.developState;},
-    color = d3.scale.category10();
+var legendColor = ["#000080","#31a354","  #FFFF00"];
+var developState = ["Highly Developed","Medium Development","Low Development"];
+var color = d3.scale.ordinal().domain(developState).range(legendColor);
+
+var cValue = function(d) { return d.developState;};
 
 // add the graph canvas to the body of the webpage
 var svg = d3.select("#map2").append("svg")
@@ -38,36 +41,29 @@ var tooltip = d3.select("body").append("div")
     .style("opacity", 0);
 
 //add bands
-svg.append("rect")
-  .attr("x", 0)
-  .attr("y", yScale(0.1) )
-  .attr("width",width)
-  .attr("height", 0.1 * height)
-  .style("fill", "#738AB0")
-  .style("opacity","0.4")
-  .style("stroke","#fff")
-  .style("stroke-width","1");
+var bandColor = ["#feebe2","#fbb4b9","#f768a1","#c51b8a","#7a0177"];
+for (var i = 0; i < bandColor.length; i++){
+  svg.append("g")
+  .append("rect")
+  .attr("x", xScale(0))
+  .attr("y", yScale(100-i*20))
+  .attr("height", xScale(20))
+  .attr("width", width)
+  .style("opacity", 0.5)
+  .style("fill",bandColor[4-i]);
+}
+
 
 
 // load data
 d3.csv("mergedData.csv", function(error, data) {
-
-  // change string (from CSV) into number format
-  data.forEach(function(d) {
-    d.literacyRate = +d.literacyRate;
-    d["LFPrate"] = +d["LFPrate"];
-//    console.log(d);
-  });
-
-  // don't want dots overlapping axis, so add in buffer to data domain
-  xScale.domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]);
-  yScale.domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]);
-
+ 
   // x-axis
   svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis)
+      
     .append("text")
       .attr("class", "label")
       .attr("x", width)
@@ -79,6 +75,7 @@ d3.csv("mergedData.csv", function(error, data) {
   svg.append("g")
       .attr("class", "y axis")
       .call(yAxis)
+
     .append("text")
       .attr("class", "label")
       .attr("transform", "rotate(-90)")
@@ -96,11 +93,12 @@ d3.csv("mergedData.csv", function(error, data) {
       .attr("cx", xMap)
       .attr("cy", yMap)
       .style("fill", function(d) { return color(cValue(d));})
-      .on("mouseover", function(d) {
+      // I don't see any difference with or without these code
+      /*.on("mouseover", function(d) {
           tooltip.transition()
                .duration(200)
-               .style("opacity", .09);
-          tooltip.html(d["literacyRate"] + "<br/> (" + xValue(d)
+               .style("opacity", 1);
+          tooltip.html(d.literacyRate + "<br/> (" + xValue(d)
 	        + ", " + yValue(d) + ")")
                .style("left", (d3.event.pageX + 5) + "px")
                .style("top", (d3.event.pageY - 28) + "px");
@@ -108,15 +106,15 @@ d3.csv("mergedData.csv", function(error, data) {
       .on("mouseout", function(d) {
           tooltip.transition()
                .duration(500)
-               .style("opacity", 0);
-      });
+               .style("opacity", 0.5);
+      });*/
 
   // draw legend
   var legend = svg.selectAll(".legend")
       .data(color.domain())
     .enter().append("g")
       .attr("class", "legend")
-      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+      .attr("transform", function(d,i) { return "translate(0," + i * 20 + ")"; });
 
   // draw legend colored rectangles
   legend.append("rect")
