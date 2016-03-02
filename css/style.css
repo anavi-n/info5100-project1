@@ -47,7 +47,7 @@ body {
           box-shadow: inset 0 0 100px rgba(0,0,0,.5);
 }
 .site-wrapper-inner {
-  
+
   vertical-align: top;
 }
 .cover-container {
@@ -195,7 +195,6 @@ body {
   text-align: center;
 	font-size: 36px;
 	font-family: sans-serif;
-  text-transform: uppercase;
   color: black;
 }
 
@@ -217,7 +216,7 @@ body {
 	margin-top: 10px;
 	margin-bottom: 10%;
 	padding-top: 3%;
-	
+
 }
 
 #title{
@@ -232,7 +231,7 @@ body {
   padding: 0;
 }
 
-#navigation{ 
+#navigation{
   position: fixed;
   margin-top: -40px;
   margin-left: -40px;
@@ -260,7 +259,7 @@ body {
   font-weight: 750;
   color: #fff;
   text-decoration: blink;
-  
+
 }
 
 .effect{
@@ -352,8 +351,3 @@ body {
   height: 28px;
   pointer-events: none;
 }
-
-
-
-
-
