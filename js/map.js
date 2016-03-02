@@ -69,8 +69,6 @@ d3.json("json/world-50m.json", function(error, world) {
     //.style("opacity","0.8")
     .style("fill",function(d){
       var countryData = isoidData.get(d.id);//only get one id
-      console.log(countryData); //undefined
-      console.log(d.id);
       //var pationRate = countryData.LaborForce;
       if (!countryData) { return "#DDDDDD";}
       else if (countryData.LaborForce <= 20) { return "#738AB0";}
