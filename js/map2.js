@@ -1,6 +1,6 @@
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    width = 1056 - margin.left - margin.right,
+    height = 550 - margin.top - margin.bottom;
 
 /*
  * value accessor - returns the value to encode for a given data object.
@@ -26,7 +26,7 @@ var cValue = function(d) { return d.developState;},
     color = d3.scale.category10();
 
 // add the graph canvas to the body of the webpage
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#map2").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -36,6 +36,18 @@ var svg = d3.select("body").append("svg")
 var tooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
+
+//add bands
+svg.append("rect")
+  .attr("x", 0)
+  .attr("y", yScale(0.1) )
+  .attr("width",width)
+  .attr("height", 0.1 * height)
+  .style("fill", "#738AB0")
+  .style("opacity","0.4")
+  .style("stroke","#fff")
+  .style("stroke-width","1");
+
 
 // load data
 d3.csv("mergedData.csv", function(error, data) {

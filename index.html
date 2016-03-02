@@ -21,6 +21,8 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!--Style-->
+    <!--https://github.com/IanLunn/Hover/-->
+    <!--link href="css/hover.css" rel="stylesheet" media="all"--> 
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,72 +32,40 @@
     <![endif]-->
   </head>
 
+  <header>  </header>
+
   <body>
+
+
   <!--Header-->
-   <!--div class="site-wrapper">
+   <div class="site-wrapper">
       <div class="site-wrapper-inner">
-
-
-        <div class="cover-container">
-
-          <div class="masthead clearfix">
-            <div class="inner">
-              <!--h3 class="masthead-brand">Cover</h3-->
-              <!--nav>
-                <ul class="nav masthead-nav">
-                  <!--li class="active"><a href="#">Home</a></li-->
-                  <!--li><a href="#">Features</a></li-->
-                  <!--li><a href="#">Contact</a></li-->
-                <!--/ul>
-              </nav>
-            </div>
+        <div id="content">
+          <div id="navigation">
+            <ul class="nav-style">
+              <li><a href="#chart1" class="effect hvr-bounce-to-right">Chart One</a></li><br>
+              <li><a href="#chart2" class="effect hvr-bounce-to-right">Chart Two</a></li>
+            </ul>
           </div>
 
-          <div class="inner cover">
-            
-              <h1 id="coverTitle">Female 25-54 Labour to pop Percentage</h1> 
+          <div id="title" class="center">
+            <p>Female 25-54 Labour to Pop Percentage</p>
           </div>
 
-
-          <div class="mastfoot">
-            <div class="inner">
-              <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div-->
-
-    <!--Main Data Content-->
-    <div id="content">
-      <div id="map1">
-        <div id="subtitle" class="left">
-          <p>Female 25-54 Labour to Pop Percentage</p>
-        </div>
-
-        <div id="map"></div>
-        <script src="js/map.js"></script>
-
-        <div id="explanations" class="right">
-          <ol>
-            <li>circle: </li>
-            <li>circle: </li>
-            <li>circle: </li>
-            <li>circle: </li>
-          </ol>
+          <!--h3>Map of Labor Force Participation Rate</h3-->
+          <a id="chart1"><h6> </h6></a>
+          <div id="map1" class="center"></div>
+            <script src="js/map.js"></script><br><br>
+      
+          <a id="chart2"><h6> </h6></a>
+          <div id="map2" class="center"></div>
+            <script src="js/map2.js"></script>
+  
+          <div id="map3"> </div>
+        
         </div>
       </div>
+   </div> 
 
-      <div id="map2">
-        <script src="js/map2.js"></script>
-      </div>
-
-      <div id="map3">
-         
-      </div>
-    </div>
-
-    
   </body>
 </html>
