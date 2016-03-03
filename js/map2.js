@@ -56,7 +56,7 @@ for (var i = 0; i < bandColor.length; i++){
 
 
 // load data
-d3.csv("mergedData.csv", function(error, data) {
+d3.csv("data/mergedData.csv", function(error, data) {
  
   // x-axis
   svg.append("g")
