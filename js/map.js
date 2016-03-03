@@ -120,7 +120,7 @@ d3.json("json/world-50m.json", function(error, world) {
     .style("stroke-linejoin","round");
     //.style("filter", "url(#stroke-shadow)");
 
-  d3.csv("WomenInWorkforce.csv",function(error,data){ //WomenInWorkforce.csv
+  d3.csv("data/WomenInWorkforce.csv",function(error,data){ //WomenInWorkforce.csv
     if (error) {console.log(error);}
     //console.log(rows);
     isoidData = d3.map(data, function (county) { return Number(county.ISOID); //console.log(county.ISOID)
