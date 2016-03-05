@@ -2,13 +2,6 @@ var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 1056 - margin.left - margin.right,
     height = 550 - margin.top - margin.bottom;
 
-/*
- * value accessor - returns the value to encode for a given data object.
- * scale - maps value to a visual display encoding, such as a pixel position.
- * map function - maps from data value to display value
- * axis - sets up axis
- */
-
 // setup x
 var xValue = function(d) { return d.literacyRate;}, // data -> value
     xScale = d3.scale.linear().domain([0,100]).range([0, width]), // value -> display
@@ -22,15 +15,15 @@ var yValue = function(d) { return d.LFPrate;}, // data -> value
     yAxis = d3.svg.axis().scale(yScale).orient("left").ticks(5);
 
 // setup fill color
-// var legendColor = ["#000080","#31a354","  #FFFF00"];
-// var developState = ["Highly Developed","Medium Development","Low Development"];
+var legendColor = ["#feebe2","#fbb4b94","#f768a1", "c51b8a", "7a0177"];
+var developState = ["Highly Developed","Medium Development","Low Development"];
 var color = function(d) {
-      if (d.LFPrate <= 20) { return "#feebe2";}
-      else if (d.LFPrate > 20 && d.LFPrate <=40) { return "#fbb4b9";}
-      else if (d.LFPrate > 40 && d.LFPrate <=60) { return "#f768a1";}
-      else if (d.LFPrate > 60 && d.LFPrate <=80) { return "#c51b8a";}
-      else if (d.LFPrate > 80 && d.LFPrate <=100) { return "#7a0177";}
-      return "#feebe2";
+      if (d.LFPrate <= 20 && d.state == "dark") { return "#feebe2";}
+      else if ( d.state == "dark" && d.LFPrate > 20 && d.LFPrate <=40) { return "#fbb4b9";}
+      else if (d.state == "dark" && d.LFPrate > 40 && d.LFPrate <=60) { return "#f768a1";}
+      else if (d.state == "dark" && d.LFPrate > 60 && d.LFPrate <=80) { return "#c51b8a";}
+      else if (d.state == "dark" && d.LFPrate > 80 && d.LFPrate <=100) { return "#7a0177";}
+      return "#bdbdbd";
 }
 
 
@@ -48,9 +41,6 @@ var svg = d3.select("#map2").append("svg")
 var tooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
-
-//add bands
-var bandColor = ["#feebe2","#fbb4b9","#f768a1","#c51b8a","#7a0177"];
 
 
 // load data
@@ -94,7 +84,6 @@ d3.csv("data/mergedData.csv", function(error, data) {
     .enter()
     .append("path")
     .attr("class", "dot")
-    // position it, can't use x/y on path, so translate it
     .attr("transform", function(d) { 
         return "translate(" + xMap(d) +  "," +  yMap(d) + ")"; 
     })
