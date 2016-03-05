@@ -33,7 +33,7 @@ d3.json("json/world-50m.json", function(error, world) {
   var filter = g.append("filter")
         .attr("id", "stroke-shadow")
         .attr("height", "140%");
-      
+
       filter.append("feGaussianBlur")
           .attr("in", "SourceAlpha")
           .attr("stdDeviation", 2)
@@ -53,7 +53,7 @@ d3.json("json/world-50m.json", function(error, world) {
       var filter2 = g.append("filter")
         .attr("id", "stroke-shadow2")
         .attr("height", "140%");
-      
+
       filter2.append("feGaussianBlur")
           .attr("in", "SourceAlpha")
           .attr("stdDeviation", 2)
@@ -73,7 +73,7 @@ d3.json("json/world-50m.json", function(error, world) {
     var filter3 = g.append("filter")
         .attr("id", "stroke-shadow3")
         .attr("height", "140%");
-      
+
       filter3.append("feGaussianBlur")
           .attr("in", "SourceAlpha")
           .attr("stdDeviation", 2)
@@ -93,7 +93,7 @@ d3.json("json/world-50m.json", function(error, world) {
     var filter4 = g.append("filter")
         .attr("id", "stroke-shadow4")
         .attr("height", "140%");
-      
+
       filter4.append("feGaussianBlur")
           .attr("in", "SourceAlpha")
           .attr("stdDeviation", 2)
@@ -125,13 +125,13 @@ d3.json("json/world-50m.json", function(error, world) {
     //console.log(rows);
     isoidData = d3.map(data, function (county) { return Number(county.ISOID); //console.log(county.ISOID)
     });
-    console.log(isoidData);
+    //console.log(isoidData);
     g.selectAll("path")
     //.style("opacity","0.8")
     .style("fill",function(d){
       var countryData = isoidData.get(d.id);//only get one id
-      console.log(countryData); //undefined
-      console.log(d.id);
+      //console.log(countryData); //undefined
+      //console.log(d.id);
       //var pationRate = countryData.LaborForce;
       if (!countryData) { return "#DDDDDD";}
       else if (countryData.LaborForce <= 20) { return "#feebe2";}
@@ -152,13 +152,13 @@ d3.json("json/world-50m.json", function(error, world) {
       else if (countryData.LaborForce > 80 && countryData.LaborForce <=100) { return "url(#stroke-shadow)";}
 
 
-        
+
     });
   });
 
 });
 
-console.log("after json");
+//console.log("after json");
 
 //explanations
 svg.append("rect")
