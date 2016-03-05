@@ -74,7 +74,7 @@ d3.csv("data/mergedData.csv", function(error, data) {
 
 
    var symbolTypes = {
-    "triangleDown": d3.svg.symbol().type("triangle-down"),
+    "triangleUp": d3.svg.symbol().type("triangle-up"),
     "circle": d3.svg.symbol().type("circle"),
     "square": d3.svg.symbol().type("square")
 };
@@ -93,7 +93,7 @@ d3.csv("data/mergedData.csv", function(error, data) {
             return symbolTypes.circle();
         }
         else if (d.developState === "Medium Development") {
-            return symbolTypes.triangleDown();
+            return symbolTypes.triangleUp();
         }
         else {
           return symbolTypes.square();
