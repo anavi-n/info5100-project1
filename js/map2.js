@@ -4,7 +4,7 @@ var margin = {top: 20, right: 20, bottom: 30, left: 40},
 
 // setup x
 var xValue = function(d) { return d.literacyRate;}, // data -> value
-    xScale = d3.scale.linear().domain([0,100]).range([0, width]), // value -> display
+    xScale = d3.scale.linear().domain([0,100]).range([0, width - 300]), // value -> display
     xMap = function(d) { return xScale(xValue(d));}, // data -> display
     xAxis = d3.svg.axis().scale(xScale).orient("bottom").ticks(11);
 
@@ -54,10 +54,10 @@ d3.csv("data/mergedData.csv", function(error, data) {
       
     .append("text")
       .attr("class", "label")
-      .attr("x", width)
+      .attr("x", width - 300)
       .attr("y", -6)
       .style("text-anchor", "end")
-      .text("literacyRate");
+      .text("Female Literacy Rate (%)");
 
   // y-axis
   svg.append("g")
@@ -70,7 +70,7 @@ d3.csv("data/mergedData.csv", function(error, data) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("LFPrate");
+      .text("Female Labor Force Participation (%)"");
 
 
    var symbolTypes = {
