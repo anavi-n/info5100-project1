@@ -22,9 +22,18 @@ var yValue = function(d) { return d.LFPrate;}, // data -> value
     yAxis = d3.svg.axis().scale(yScale).orient("left").ticks(5);
 
 // setup fill color
-var legendColor = ["#000080","#31a354","  #FFFF00"];
-var developState = ["Highly Developed","Medium Development","Low Development"];
-var color = d3.scale.ordinal().domain(developState).range(legendColor);
+// var legendColor = ["#000080","#31a354","  #FFFF00"];
+// var developState = ["Highly Developed","Medium Development","Low Development"];
+var color = function(d) {
+      if (d.LFPrate <= 20) { return "#feebe2";}
+      else if (d.LFPrate > 20 && d.LFPrate <=40) { return "#fbb4b9";}
+      else if (d.LFPrate > 40 && d.LFPrate <=60) { return "#f768a1";}
+      else if (d.LFPrate > 60 && d.LFPrate <=80) { return "#c51b8a";}
+      else if (d.LFPrate > 80 && d.LFPrate <=100) { return "#7a0177";}
+      return "#feebe2";
+}
+
+
 
 var cValue = function(d) { return d.developState;};
 
@@ -42,17 +51,6 @@ var tooltip = d3.select("body").append("div")
 
 //add bands
 var bandColor = ["#feebe2","#fbb4b9","#f768a1","#c51b8a","#7a0177"];
-for (var i = 0; i < bandColor.length; i++){
-  svg.append("g")
-  .append("rect")
-  .attr("x", xScale(0))
-  .attr("y", yScale(100-i*20))
-  .attr("height", xScale(20))
-  .attr("width", width)
-  .style("opacity", 0.5)
-  .style("fill",bandColor[4-i]);
-}
-
 
 
 // load data
@@ -84,34 +82,39 @@ d3.csv("data/mergedData.csv", function(error, data) {
       .style("text-anchor", "end")
       .text("LFPrate");
 
-  // draw dots
-  svg.selectAll(".dot")
-      .data(data)
-    .enter().append("circle")
-      .attr("class", "dot")
-      .attr("r", 3.5)
-      .attr("cx", xMap)
-      .attr("cy", yMap)
-      .style("fill", function(d) { return color(cValue(d));})
-      // I don't see any difference with or without these code
-      /*.on("mouseover", function(d) {
-          tooltip.transition()
-               .duration(200)
-               .style("opacity", 1);
-          tooltip.html(d.literacyRate + "<br/> (" + xValue(d)
-	        + ", " + yValue(d) + ")")
-               .style("left", (d3.event.pageX + 5) + "px")
-               .style("top", (d3.event.pageY - 28) + "px");
-      })
-      .on("mouseout", function(d) {
-          tooltip.transition()
-               .duration(500)
-               .style("opacity", 0.5);
-      });*/
 
+   var symbolTypes = {
+    "triangleDown": d3.svg.symbol().type("triangle-down"),
+    "circle": d3.svg.symbol().type("circle"),
+    "square": d3.svg.symbol().type("square")
+};
+
+   svg.selectAll("path")
+    .data(data)
+    .enter()
+    .append("path")
+    .attr("class", "dot")
+    // position it, can't use x/y on path, so translate it
+    .attr("transform", function(d) { 
+        return "translate(" + xMap(d) +  "," +  yMap(d) + ")"; 
+    })
+    // assign d from our symbols
+    .attr("d", function(d,i){
+        if (d.developState === "Highly Developed") {// circle if bar === 0
+            return symbolTypes.circle();
+        }
+        else if (d.developState === "Medium Development") {
+            return symbolTypes.triangleDown();
+        }
+        else {
+          return symbolTypes.square();
+        }
+    })
+    .style("fill", color)
+    
   // draw legend
   var legend = svg.selectAll(".legend")
-      .data(color.domain())
+      .data(color)
     .enter().append("g")
       .attr("class", "legend")
       .attr("transform", function(d,i) { return "translate(0," + i * 20 + ")"; });
