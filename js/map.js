@@ -148,7 +148,7 @@ d3.json("json/world-50m.json", function(error, world) {
 //explanations
 svg.append("text")
     .attr("x",width + 50)
-    .attr("y",3)
+    .attr("y",5)
     .attr("dy",".35em")
     .style("text-anchor", "end")
     .style("font-weight", "bold")
