@@ -70,7 +70,7 @@ d3.csv("data/mergedData.csv", function(error, data) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Female Labor Force Participation (%)"");
+      .text("Female Labor Force Participation (%));
 
 
    var symbolTypes = {
