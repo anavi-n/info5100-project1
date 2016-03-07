@@ -86,9 +86,7 @@ d3.csv("data/mergedData.csv", function(error, data) {
     .data(data)
     .enter()
     .append("path")
-    //.attr("class", "dot")
     .attr("transform", function(d) { 
-      //console.log( xMap(d) + ", " + yMap(d));
         return "translate(" + xMap(d) +  "," +  yMap(d) + ")"; 
         
     })
@@ -110,8 +108,7 @@ d3.csv("data/mergedData.csv", function(error, data) {
     })
     ;
 
-var legendColor = ["#feebe2","#fbb4b94","#f768a1", "c51b8a", "7a0177"];
-var developState = ["High Human Developed","Medium Human Development","Low Human Development"];
+var developState = ["High Human Development","Medium Human Development","Low Human Development"];
 
   // draw legend
   var highSymbol = d3.svg.symbol().type('circle')(),
@@ -124,35 +121,29 @@ var developState = ["High Human Developed","Medium Human Development","Low Human
       .attr("class", "legend")
       .attr("transform", function(d,i) { return "translate(0," + i * 20 + ")"; });
 
-  // draw legend colored rectangles
-  /**legend.append("rect")
-      .attr("x", width - 18)
-      .attr("width", 18)
-      .attr("height", 18)
-      .style("fill", "white")
-      .style("stroke", "black")
-	;**/
-
 svg.append("rect")
       .attr("x", 978)
       .attr("y",0)
       .attr("width", 18)
       .attr("height", 18)
-      .style("fill", "#f768a1")
-      ;
+         .style("stroke", "black")
+	.style("fill", "white");
+     
 
 
-svg.append("polyline")
+svg.append("polygon")
     .attr("points", "978,38 996,38 987,20")
     .attr("x", width)
     .attr("y",20)
-    .style("fill", "#f768a1");
+     .style("stroke", "black")
+	.style("fill", "white");
 
 svg.append("circle")
       .attr("cx", 987)
       .attr("cy",49)
       .attr("r", 9)
-      .style("fill", "#f768a1")
+          .style("stroke", "black")
+	.style("fill", "white");
 
   // draw legend text
   legend.append("text")
