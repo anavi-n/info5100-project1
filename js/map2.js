@@ -45,7 +45,11 @@ var tooltip = d3.select("body").append("div")
 
 // load data
 d3.csv("data/mergedData.csv", function(error, data) {
- 
+  
+  if (error) {console.log(error);}
+
+
+
   // x-axis
   svg.append("g")
       .attr("class", "x axis")
@@ -70,7 +74,7 @@ d3.csv("data/mergedData.csv", function(error, data) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Female Labor Force Participation (%));
+      .text("Female Labor Force Participation (%)");
 
 
    var symbolTypes = {
@@ -79,20 +83,22 @@ d3.csv("data/mergedData.csv", function(error, data) {
     "square": d3.svg.symbol().type("square")
 };
 
+// assign d from our symbols
    svg.selectAll("path")
     .data(data)
     .enter()
     .append("path")
-    .attr("class", "dot")
+    //.attr("class", "dot")
     .attr("transform", function(d) { 
+      console.log( xMap(d) + ", " + yMap(d));
         return "translate(" + xMap(d) +  "," +  yMap(d) + ")"; 
+        
     })
-    // assign d from our symbols
     .attr("d", function(d,i){
-        if (d.developState === "Highly Developed") {// circle if bar === 0
+        if (d.developState === "High Human Development") {// circle if bar === 0
             return symbolTypes.circle();
         }
-        else if (d.developState === "Medium Development") {
+        else if (d.developState === "Medium Human Development") {
             return symbolTypes.triangleUp();
         }
         else {
@@ -100,26 +106,34 @@ d3.csv("data/mergedData.csv", function(error, data) {
         }
     })
     .style("fill", color)
-    
-  // draw legend
-  var legend = svg.selectAll(".legend")
-      .data(color)
-    .enter().append("g")
-      .attr("class", "legend")
-      .attr("transform", function(d,i) { return "translate(0," + i * 20 + ")"; });
+    .style("opacity",function(d){
+      if (d.state == "light") { return 0.3;}
+      else return 1;
+    })
+    ;
 
-  // draw legend colored rectangles
-  legend.append("rect")
-      .attr("x", width - 18)
-      .attr("width", 18)
-      .attr("height", 18)
-      .style("fill", color);
 
-  // draw legend text
-  legend.append("text")
-      .attr("x", width - 24)
-      .attr("y", 9)
-      .attr("dy", ".35em")
-      .style("text-anchor", "end")
-      .text(function(d) { return d;})
+    // add lables
+    d3.csv("data/mergedData.csv",function(error, data){
+      if (error) {console.log(error);}
+
+      for (var i = data.length - 1; i >= 0; i--) {
+        var country = data[i].Country;
+        var literacyRate = data[i].literacyRate;
+        var laborForce = data[i].LFPrate;
+        console.log(country);
+
+        svg.append("text")
+        .data(data)
+        .attr("x", function(d){ return data[i].literacyRate * 7 + 5;})
+        .attr("y", function(d){ return 5 * (100 - data[i].LFPrate);})
+        .attr("dy",".35em")
+        .text(function(d){
+          if (data[i].state == "dark") { return data[i].Country;}
+        });
+      }
+
+    });
+
+
 });
