@@ -15,8 +15,6 @@ var yValue = function(d) { return d.LFPrate;}, // data -> value
     yAxis = d3.svg.axis().scale(yScale).orient("left").ticks(5);
 
 // setup fill color
-var legendColor = ["#feebe2","#fbb4b94","#f768a1", "c51b8a", "7a0177"];
-var developState = ["Highly Developed","Medium Development","Low Development"];
 var color = function(d) {
       if (d.LFPrate <= 20 && d.state == "dark") { return "#feebe2";}
       else if ( d.state == "dark" && d.LFPrate > 20 && d.LFPrate <=40) { return "#fbb4b9";}
@@ -112,6 +110,32 @@ d3.csv("data/mergedData.csv", function(error, data) {
     })
     ;
 
+var legendColor = ["#feebe2","#fbb4b94","#f768a1", "c51b8a", "7a0177"];
+var developState = ["High Human Developed","Medium Human Development","Low Human Development"];
+
+  // draw legend
+  var legend = svg.selectAll(".legend")
+      .data(developState)
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d,i) { return "translate(0," + i * 20 + ")"; });
+
+  // draw legend colored rectangles
+  legend.append("rect")
+      .attr("x", width - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", "white")
+      .style("stroke", "black")
+	;
+
+  // draw legend text
+  legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d;})
 
     // add lables
     d3.csv("data/mergedData.csv",function(error, data){
